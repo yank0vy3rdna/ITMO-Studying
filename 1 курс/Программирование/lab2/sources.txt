@@ -1,0 +1,6 @@
+./Lab2Test.java
+./Pokemons/Miltank.java
+./Lab2.java
+./Moves/Tackle.java
+./Moves/Rest.java
+./Moves/Flamethrowler.java
