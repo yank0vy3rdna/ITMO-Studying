@@ -1,0 +1,12 @@
+./Soap.java
+./IHuman.java
+./Sink.java
+./Human.java
+./Main.java
+./Room.java
+./Towel.java
+./AThing.java
+./Thing.java
+./Lab3.java
+./Things.java
+./APlace.java

@@ -23,6 +23,11 @@ echo -e Тип диеты'\n'Nullivore>joltik4/bronzong
 echo -e satk=5 sdef=5 spd=7>krokorok7
 echo -e Развитые'\n'способности  Analytic>starmie2
 echo -e Способности  Yawn Poison Gas Sludge'\n'Amnesia Encore Body Slam Toxic Acid Spray Spit Up Stockpile Swallow'\n'Sludge Bomb Gastro Acid Wring Out Gunk Shot>swalot9
+
+
+echo После 1 части 
+tree -p
+
 # 2 часть
 chmod 513 electivire2
 chmod 062 electivire2/chansey
@@ -42,6 +47,10 @@ chmod u-rwx,g=r,o=r joltik4/bronzong
 chmod 004 krokorok7
 chmod u=rw,g=w,o=r starmie2
 chmod 400 swalot9
+
+
+echo После 2 части 
+tree -p
 # 3 часть
 # дам себе права, чтобы копировать все что угодно куда угодно
 chmod -R 777 ./
@@ -52,11 +61,43 @@ cp swalot9 gardevoir8/shinx/
 ln -s gardevoir8 Copy_59
 ln swalot9 gardevoir8/joltikswalot
 ln -s starmie2 electivire2/leavannystarmie
-# 4 часть
-wc -m joltik4/luxray joltik4/drapion | sort -r 2>1
-find -name *l -printf "%s %p \n"| sort | head - 2>1
-cat -n $(find ./gardevoir8/*) |sort -k2
-ls -R joltik4 |sort 2>1
+
+
+
+echo После 3 части 
 tree -p
 
-#chmod -R 700 ./lab0
+
+# 4 часть
+wc -m joltik4/luxray joltik4/drapion| sed '$d' | sort -r 2>1 
+
+ls  -lR 2>/dev/null |grep l$ | sort -k 5
+
+cd gardevoir8
+cat -n $(ls -p| grep -v /)|sort -k2
+cd ..
+
+ls -R joltik4 |sort 2>1
+
+ls -lR | grep se | sort -k 2 | tail -4 2>1
+
+mkdir tmp
+touch tmp/err
+ls -ltRr | grep rwx |awk '{print $NF}'|grep ^j |tail -2 2>tmp/err
+
+
+
+
+
+#5 часть
+
+rm starmie2
+rm joltik4/luxray
+rm Copy_*
+rm gardevoir8/joltikswal*
+rm -R joltik4
+rm -R gardevoir8/igglybuff
+
+
+echo После 5 части 
+tree -p

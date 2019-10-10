@@ -12,7 +12,7 @@ public class Rest extends StatusMove{
 		eff = eff.condition(Status.SLEEP);
 		eff = eff.turns(2);
 		att.restore();
-		att.setCondition(eff);
+		att.addEffect(eff);
 	}
 	protected boolean checkAccuracy(Pokemon att,Pokemon def){
 		return true;
