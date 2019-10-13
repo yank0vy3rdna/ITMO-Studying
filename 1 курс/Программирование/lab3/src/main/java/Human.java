@@ -12,7 +12,7 @@ public class Human implements IHuman{
 		System.out.println(this.getName() + " твердо решает " + des);
 	}
 	public void useThing(Thing thing){
-    
+    	System.out.println("Теперь у " + this.getName() + " " + thing.getStatusChange());
 	}
 	Human(String name){
 		this.name = name;

@@ -9,6 +9,7 @@ public class Room extends APlace{
 
 	private ArrayList<Thing> thingsArr = new ArrayList<Thing>();
 	public void useThing(Human client,Things thing){
+		System.out.println("kek");
 		for (int i = 0; i < thingsArr.size();i++){
 			if (thingsArr.get(i).getType()==thing){
 				System.out.println(client.getName() + " использует объект \"" + thingsArr.get(i).getName()+"\"");

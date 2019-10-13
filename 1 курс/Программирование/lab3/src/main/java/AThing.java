@@ -3,6 +3,7 @@ abstract class AThing{
 	private String name;
 	private ArrayList<Human> clientsArr = new ArrayList<Human>();
 	private Things type;
+	private String statusChange;
 	public void setType(Things type){
 		this.type = type;
 	}
@@ -11,6 +12,9 @@ abstract class AThing{
 	}
 	public String getName(){
 		return name;
+	}
+	public String getStatusChange(){
+		return this.statusChange;
 	}
 	public void addClient(Human client){
 		clientsArr.add(client);
@@ -24,6 +28,9 @@ abstract class AThing{
 	}
 	private void setStatus(boolean status){
 		this.status = status;
+	}
+	public void setStatusChange(String status){
+		this.statusChange = status;
 	}
 	private void turnOn(Human client){
 		if (this.checkClient(client))
