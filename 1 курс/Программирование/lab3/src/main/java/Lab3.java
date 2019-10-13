@@ -12,10 +12,15 @@ class Lab3 {
 		room.useThing(goat,Things.SINK);
 		room.useThing(goat,Things.TOWEL);
 		room.paymentThing(dunno, Things.SOAP);
-		//room.paymentThing(dunno, Things.SINK);
-		//room.paymentThing(dunno, Things.TOWEL);
 		room.useThing(dunno,Things.SOAP);
 		room.useThing(dunno,Things.SINK);
-		room.useThing(dunno,Things.TOWEL);
+		room.action("щелк");
+		dunno.action("вертит кран в разные стороны");
+		dunno.action("стучит по рукомойнику кулаком");
+		dunno.action("чувствует боль от мыла в глазах");
+		dunno.speak("Козлик, блядь, иди сюда, бачок потiк");
+		goat.action("подошел к крану");
+		room.action("отключение света");
+		room.action("мигание глазка приемника монет на стене")
 	}
 }

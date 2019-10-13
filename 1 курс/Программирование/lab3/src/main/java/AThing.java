@@ -19,6 +19,9 @@ abstract class AThing{
 	public void addClient(Human client){
 		clientsArr.add(client);
 	}
+	public void rmClient(Human client){
+		clientsArr.remove(client);
+	}
 	public boolean checkClient(Human client){
 		return clientsArr.contains(client);
 	}

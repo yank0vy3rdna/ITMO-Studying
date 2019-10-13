@@ -7,14 +7,23 @@ public class Room extends APlace{
 		thingsArr.add(new Towel("полотенце"));
 	}
 
+	public void action(String act){
+		System.out.println("Произошло "+act);
+	}
 	private ArrayList<Thing> thingsArr = new ArrayList<Thing>();
 	public void useThing(Human client,Things thing){
-		System.out.println("kek");
 		for (int i = 0; i < thingsArr.size();i++){
-			if (thingsArr.get(i).getType()==thing){
-				System.out.println(client.getName() + " использует объект \"" + thingsArr.get(i).getName()+"\"");
-				client.useThing(thingsArr.get(i));
-				break;
+			if (thingsArr.get(i).getType() == thing){
+				if(thingsArr.get(i).checkClient(client)){
+					System.out.println(client.getName() + " использует объект \"" + thingsArr.get(i).getName()+"\"");
+					client.useThing(thingsArr.get(i));
+					thingsArr.get(i).rmClient(client);
+					break;
+				}
+				else
+				{
+					System.out.println(client.getName() + " пытается использовать объект \"" + thingsArr.get(i).getName()+"\", но ему дают по счам тк тот не заплатил нолог");
+				}
 			}
 		}
 	}
