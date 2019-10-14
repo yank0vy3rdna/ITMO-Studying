@@ -58,4 +58,18 @@ abstract class AThing{
 	AThing(String name){
 		this.name = name;
 	}
+	@Override
+    public int hashCode() {
+        return super.hashCode()+this.name.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj.hashCode()== this.hashCode() ? true : false;
+    }
+
+    @Override
+    public String toString() {
+    	return this.name + " типа : " + getType.toString();
+    }
 }

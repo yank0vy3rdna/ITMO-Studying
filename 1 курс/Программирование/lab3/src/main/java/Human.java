@@ -20,6 +20,20 @@ public class Human implements IHuman{
 	public void useThing(Thing thing){
     	System.out.println("Теперь у " + this.getName() + " " + thing.getStatusChange());
 	}
+	@Override
+    public int hashCode() {
+        return super.hashCode()+this.name.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj.hashCode()== this.hashCode() ? true : false;
+    }
+
+    @Override
+    public String toString() {
+    	return "существо по имени " + this.name;
+    }
 	Human(String name){
 		this.name = name;
 	}
