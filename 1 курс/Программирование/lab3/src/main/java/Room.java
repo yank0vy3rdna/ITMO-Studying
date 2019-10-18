@@ -5,6 +5,7 @@ public class Room extends APlace{
 		thingsArr.add(new Sink("рукомойник"));
 		thingsArr.add(new Soap("мыло"));
 		thingsArr.add(new Towel("полотенце"));
+		thingsArr.add(new Coiner("монетоприемник"));
 	}
 
 	public void action(String act){
@@ -27,10 +28,11 @@ public class Room extends APlace{
 			}
 		}
 	}
-	public void paymentThing(Human client,Things thing){
+
+	public void paymentThing(Human client,Things thing,int price){
 		for (int i = 0; i < thingsArr.size();i++){
 			if (thingsArr.get(i).getType()==thing){
-				System.out.println(client.getName() + " платит нолог на объект \"" + thingsArr.get(i).getName()+"\"");
+				System.out.println(client.getName() + " платит нолог на объект \"" + thingsArr.get(i).getName()+"\" в размере "+String.valueOf(price)+" сантиков");
 				thingsArr.get(i).addClient(client);
 				break;
 			}

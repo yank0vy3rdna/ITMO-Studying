@@ -6,7 +6,7 @@ abstract class APlace {
 
 	@Override
     public int hashCode() {
-        return super.hashCode()+this.name.hashCode();
+        return super.hashCode()+this.getPlace().hashCode();
     }
 
     @Override
@@ -18,7 +18,7 @@ abstract class APlace {
     public String toString() {
     	return "Место " + this.getPlace();
     }
-    String getPlace() {
+    public String getPlace() {
         return placeName;
     }
 }

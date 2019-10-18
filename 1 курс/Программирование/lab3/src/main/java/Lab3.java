@@ -4,23 +4,26 @@ class Lab3 {
 		Room room = new Room("комната");
 		Human dunno = new Human("Незнайка");
 		Human goat = new Human("Козлик");
-		goat.decision("умыться");
-		room.paymentThing(goat, Things.SOAP);
-		room.paymentThing(goat, Things.SINK);
-		room.paymentThing(goat, Things.TOWEL);
+		goat.decision("умыться на ночь");
+		room.paymentThing(goat, Things.SOAP,1);
+		room.paymentThing(goat, Things.SINK,1);
+		room.paymentThing(goat, Things.TOWEL,1);
 		room.useThing(goat,Things.SOAP);
 		room.useThing(goat,Things.SINK);
 		room.useThing(goat,Things.TOWEL);
-		room.paymentThing(dunno, Things.SOAP);
+		dunno.action("начал умываться");
+		room.paymentThing(dunno, Things.SOAP,1);
 		room.useThing(dunno,Things.SOAP);
 		room.useThing(dunno,Things.SINK);
 		room.action("щелк");
+		room.action("вода перестала течь");
 		dunno.action("вертит кран в разные стороны");
 		dunno.action("стучит по рукомойнику кулаком");
 		dunno.action("чувствует боль от мыла в глазах");
-		dunno.speak("Козлик, блядь, иди сюда, бачок потiк");
+		dunno.speak("Козлик, иди сюда, бачок потiк");
+		goat.action("видит неладное");
 		goat.action("подошел к крану");
 		room.action("отключение света");
-		room.action("мигание глазка приемника монет на стене");
+		room.action("мигание глазка и поблескивание металлического язычка приемника монет на стене");
 	}
 }

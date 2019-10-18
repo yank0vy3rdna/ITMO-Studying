@@ -1,0 +1,7 @@
+<schedule lang="ru" group="P3114" day="th">
+        <lessons>
+			<lesson time="11:40-13:10" room="550 ауд." place="Биржевая линия, д.16, лит.А"  lesson="Физика (Лек)"/>
+			<lesson time="15:20-16:50 (Четная неделя)" room="550 ауд." place="Биржевая линия, д.16, лит.А"  lesson="Физика (Прак)"/>
+			<lesson time="15:20-16:50 (Нечетная неделя)" room="550 ауд." place="Биржевая линия, д.16, лит.А"  lesson="Физика (Лаб)"/>
+        </lessons>
+</schedule>
