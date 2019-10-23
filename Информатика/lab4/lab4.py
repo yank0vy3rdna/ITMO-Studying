@@ -1,125 +1,89 @@
 import re
-"""Simple HTML/XML Parser
-Can detect the malformed  tags lik id=sth or style=somevalue etc. 
-Sample usage:
- Instantiate the parser class by providing the url  or xml|http string
- 
- To Get the 'id' attribute of the 'style' tag
- 1.spp.parser('http://www.google.com').getByTag('style').item(0).attr('id')
- 
- To get the attribute of a node whose id is 'csi'
- 2.spp.parser('http://www.google.com').getById('csi).attr('style')
- 
- # doc is the html or xml string you want to parse
- 3.spp.parser(doc).getById('test').attr('href')
- 
- To get the src of an image which is the 4th image of the document
- 4.spp.parser(doc).getBytag('img').item(4).attr('src')
- 
- To get the content of a node which has no child
- 5.spp.parser(doc).getById('test').innerText()
-"""
 
-import re
-import urllib2
+class node: # Рекурсивный парсер XML
+	def __init__(self,doc,depth):
+		self.doc = doc
+		self.depth = depth
+		self.parsenode()
 
-class node:
-	def __init__(self,tag,tagName=None,motherdoc=None):
-		self.node=tag
-		self.tagName = tagName
-		self.doc =motherdoc
-		
-		
-	
-	def attr(self,attr):
-		"""supporting  id="test" | id='test' | id=test"""
-		attrString='{0}=(?:"|\')?(.*?)(?:"|\')?(?:\s|>)'.format(attr)
-		attr_re =  re.compile(attrString,re.S)
-		return attr_re.search(self.node).group(1)
-	
-	def innerText(self):
-		"""Returns the Node Content: It returns only the single node content 
-		So use this function for the node which has no child.Using the function for 
-		mother nodes will return unexpected result
-		"""
-		reString = '(?<=<{0})[^>]*>(.*?)(?=</{0}>)'.format(self.tagName)	
-		tag_re = re.compile(reString,re.S)
-		matches = re.findall(tag_re,self.doc)
-		if(self.num!=-1):
-			return matches[self.num]
-		else:
-			reString = '(?<=<{0}).*?\sid=(?:"|\')?{1}(?:"|\')?[^>]*>(.*?)(?=</{0}>)'.format(self.tagName,self.ida)	
-			tag_re = re.compile(reString,re.S)
-			matches = re.findall(tag_re,self.doc)
-			return matches[0]		 
+	def parsenode(self):
 
-class parser:
-	"""Instantiate this class like 
-	spp.parser(doc)
-	doc can be either xml|http document string or a URL 
-	You can chain the methods """
-	doc=''
-	#elems is the total number of tags
-	elems=''
-	tagObjs=[]
-	def __init__(self,doc):
-		if(re.search(r'^http://',doc)):
-			req = urllib2.Request(doc)
-			self.doc = urllib2.urlopen(req).read()
-		else:
-			self.doc=doc
-		tag_re = re.compile(r'<(?!/).*?>',re.S)
-		self.elems =  re.findall(tag_re, self.doc)
-		
-	def count(self):
-		return len(self.elems)
-		
-	def getByTag(self,tag):
-		attrString = '<{0}.*?>'.format(tag)
-		attr_re =  re.compile(attrString,re.S)
-		tags = re.findall(attr_re, self.doc)
-				
-		def callNode(x):
-			return node(x,tag,self.doc)
-			
-		if(len(tags)>0):
-			self.tagObjs= map(callNode,tags)
-		return self
-		
-	def getById(self,idS):
-		idStr =  '(id="{0}")|(id={0})|(id=\'{0}\')'.format(idS)
-		attr_re =  re.compile(idStr,re.S)
-		
-		def getNum(single,allE):
-			count=0
-			for i in allE:
-				if (i==single):
-					return count
-				count=count+1
-			
-	
-		for elem in self.elems:
-			if(attr_re.search(elem)!=None):				
-				tag = re.search(r'<(.*?)\s',elem).group(1)
-				obj=node(elem,tag,self.doc)
-				obj.num=-1
-				obj.ida=idS
-				return obj
-				
-				
-	def items(self):
-		return self.tagObjs
-	def item(self,no):
-		"""Returns a Node object and sets the number"""
-		self.tagObjs[no].num=no
-		return self.tagObjs[no]
+		self.tag = re.match('<[^/].*>',self.doc).group(0)
+		self.name = self.tag.split(' ')[0][1:]
+		if self.name[-1]=='>':
+			self.name = self.name[:-1]
+		sourceargs = self.tag[len(self.name)+2:-1]
+		sourceargs = sourceargs.split(' ')
+		self.args = {}
+		for i in sourceargs:
+			a = i.split('=')
+			if len(a)>1:
+				self.args[a[0]]=a[1].replace('"','')
+		self.inner=self.doc[self.doc.find('<',len(self.tag)):self.doc.rfind('</')]
+		self.countchilds = 0
+		depth = 0
+		childs = []
+		for i in self.inner:
+			if i == '<':
+				if depth == 0:
+					self.countchilds += 1
+					childs.append('')
+				depth += 1
 
+			elif i == '/' and depth > 0:
+				depth -= 1
+			childs[self.countchilds-1] += i
 
+		self.childnodes = []
+		self.childsbynames = {}
+		for i in childs:
+			self.childnodes.append(node(i,self.depth+1))
+			if self.childnodes[-1].name in self.childsbynames.keys():
+				self.childsbynames[self.childnodes[-1].name].append(self.childnodes[-1])
+			else:
+				self.childsbynames[self.childnodes[-1].name] = [self.childnodes[-1]]
 
-def parse(text):
-	print(re.findall('<.+>.*</.+>',text))
+	def print(self):
+		print('-'*self.depth+' '+self.tag,self.args)
+		for i in self.childnodes:
+			i.print()
+	def createjson(self,withname=True):
+		json = ''
+		if self.depth == 0:
+			json += '{\n'
+		json += '	'*(self.depth+1)
+		if withname:
+			 json += '"'+ self.name + '" : '
+		json += '{\n'
+
+		for i in self.childsbynames.keys():
+			if len(self.childsbynames[i])>1:
+				json += '	'*(self.depth+2)
+				json += '"'+i+'" : [\n'
+				for j in self.childsbynames[i]:
+					json+=j.createjson(False)
+				json = json[:-2]+'\n'
+				json += '	'*(self.depth+2)
+				json += '],\n'
+			else:
+				for j in self.childsbynames[i]:
+					json+=j.createjson()
+
+		for i in self.args.keys():
+			json += '	'*(self.depth+2)
+			json += '"_'+i+'" : "' + self.args[i] + '",'
+			json += '\n'
+		json = json[:-2]+'\n'
+		json += '	'*(self.depth+1)
+
+		json += '},\n'
+		if self.depth == 0:
+			json = json[:-2] +'\n'
+			json += '}'
+		return json
+
 
 with open('schedule.xml') as f:
 	ft = f.read()
-	a = parser(ft)
-	print(a.getByTag('schedule').item(0))
+	a = node(ft,0)
+	print(a.createjson())
