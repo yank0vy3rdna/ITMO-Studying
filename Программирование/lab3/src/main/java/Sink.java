@@ -1,8 +1,15 @@
+import java.util.ArrayList;
+import java.util.Arrays;
 public class Sink extends Thing{
 	Sink(String name){
 		super(name);
 		this.setType(Things.SINK);
-		this.setStatusChange("смыл мыло");
+		ArrayList<Statement> add = new ArrayList<Statement>(
+			Arrays.asList(new Statement("мокрое лицо")));
+		ArrayList<Statement> rm = new ArrayList<Statement>(
+			Arrays.asList(new Statement("намыленное лицо")));
+		this.setonSuccessfullUsingRm(rm);
+		this.setonSuccessfullUsingAdd(add);
 	}
 	/*
 	public void turn(Human client){

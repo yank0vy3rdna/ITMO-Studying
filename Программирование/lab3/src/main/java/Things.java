@@ -1,5 +1,6 @@
 enum Things{
 	SINK,
 	SOAP,
-	TOWEL
+	TOWEL,
+	COINER
 }

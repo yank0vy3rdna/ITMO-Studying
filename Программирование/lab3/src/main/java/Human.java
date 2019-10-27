@@ -14,7 +14,10 @@ public class Human extends Entity implements IHuman{
 		System.out.println(this.getName() + " говорит: " + str);
 	}
 	public void useThing(Thing thing){
-    	System.out.println("Теперь у " + this.getName() + " " + thing.getStatusChange());
+		ArrayList<Statement> rm = thing.getonSuccessfullUsingRm();
+		this.removeStatements(rm);
+		ArrayList<Statement> add = thing.getonSuccessfullUsingAdd();
+		this.addStatements(add);
 	}
 
     @Override

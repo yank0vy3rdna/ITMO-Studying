@@ -28,7 +28,14 @@ public class Room extends APlace{
 
 	public void paymentThing(Human client,Things thing,int price){
 		for (int i = 0; i < thingsArr.size();i++){
+			if (thingsArr.get(i).getType()==Things.COINER){
+				thingsArr.get(i).addClient(client);
+			}
+		}
+		for (int i = 0; i < thingsArr.size();i++){
 			if (thingsArr.get(i).getType()==thing){
+
+				this.useThing(client,Things.COINER);
 				System.out.println(client.getName() + " платит нолог на объект \"" + thingsArr.get(i).getName()+"\" в размере "+String.valueOf(price)+" сантиков");
 				thingsArr.get(i).addClient(client);
 				break;

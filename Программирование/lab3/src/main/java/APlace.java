@@ -3,7 +3,7 @@ abstract class APlace extends Entity{
         super(name);
     }
     public void action(String act){
-        System.out.println("Произошло "+act+"в месте \""+this.getName()+"\"");
+        System.out.println("Произошло "+act+" в месте \""+this.getName()+"\"");
     }
     @Override
     public String toString() {
