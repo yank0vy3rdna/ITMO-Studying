@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Arrays;
 public class Room extends APlace{
 	Room(String name) {
 		super(name);
@@ -25,7 +26,15 @@ public class Room extends APlace{
 			}
 		}
 	}
-
+	public void letCoinerBlink(){
+		for (int i = 0; i < thingsArr.size();i++){
+			if(thingsArr.get(i).getType()==Things.COINER){
+				ArrayList<Statement> add = new ArrayList<Statement>(
+					Arrays.asList(new Statement("мигание глазка"),new Statement("поблескивание металлического язычка приемника монет на стене")));
+				thingsArr.get(i).addStatements(add);
+			}
+		}
+	}
 	public void paymentThing(Human client,Things thing,int price){
 		for (int i = 0; i < thingsArr.size();i++){
 			if (thingsArr.get(i).getType()==Things.COINER){
