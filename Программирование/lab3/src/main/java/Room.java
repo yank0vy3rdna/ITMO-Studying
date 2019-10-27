@@ -8,9 +8,6 @@ public class Room extends APlace{
 		thingsArr.add(new Coiner("монетоприемник"));
 	}
 
-	public void action(String act){
-		System.out.println("Произошло "+act);
-	}
 	private ArrayList<Thing> thingsArr = new ArrayList<Thing>();
 	public void useThing(Human client,Things thing){
 		for (int i = 0; i < thingsArr.size();i++){

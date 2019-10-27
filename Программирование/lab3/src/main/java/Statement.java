@@ -1,6 +1,5 @@
-class Statement{
-	private String name;
+class Statement extends Entity{
 	Statement(String name){
-		this.name = name;
+		super(name);
 	}
 }

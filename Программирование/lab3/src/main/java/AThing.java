@@ -1,6 +1,5 @@
 import java.util.ArrayList;
-abstract class AThing{
-	private String name;
+abstract class AThing extends Entity{
 	private ArrayList<Human> clientsArr = new ArrayList<Human>();
 	private Things type;
 	private String statusChange;
@@ -9,9 +8,6 @@ abstract class AThing{
 	}
 	public Things getType(){
 		return this.type;
-	}
-	public String getName(){
-		return name;
 	}
 	public String getStatusChange(){
 		return this.statusChange;
@@ -36,17 +32,8 @@ abstract class AThing{
 		this.statusChange = status;
 	}
 	AThing(String name){
-		this.name = name;
+		super(name);
 	}
-	@Override
-    public int hashCode() {
-        return super.hashCode()+this.name.hashCode();
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        return obj.hashCode()== this.hashCode() ? true : false;
-    }
 
     @Override
     public String toString() {

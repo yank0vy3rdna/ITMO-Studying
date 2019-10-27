@@ -1,26 +1,35 @@
 import re
-
+import time
+start_time = time.clock()
 class node: # Рекурсивный парсер XML
 	def __init__(self,doc,depth):
-		self.doc = doc
-		self.depth = depth
-		self.parsenode()
-
-	def parsenode(self):
-
-		self.tag = re.match('<[^/].*>',self.doc).group(0)
-		self.name = self.tag.split(' ')[0][1:]
+		self.doc = doc # Тело 
+		self.depth = depth # Глубина рекурсии
+		self.tag = re.match('<[^/].*>',self.doc).group(0) # Тэг ноды
+		self.name = self.tag.split(' ')[0][1:] # Имя тэга
 		if self.name[-1]=='>':
 			self.name = self.name[:-1]
 		sourceargs = self.tag[len(self.name)+2:-1]
 		sourceargs = sourceargs.split(' ')
-		self.args = {}
+		a = False
+		newarr = []
+		k = -1
+		for i in sourceargs:
+			if not a:
+				newarr.append(i)
+				k+=1
+			else:
+				newarr[k] += ' ' + i
+			if i.count('"')%2==1:
+				a = not a
+		sourceargs=newarr
+		self.args = {} # Аргументы тэга
 		for i in sourceargs:
 			a = i.split('=')
 			if len(a)>1:
 				self.args[a[0]]=a[1].replace('"','')
-		self.inner=self.doc[self.doc.find('<',len(self.tag)):self.doc.rfind('</')]
-		self.countchilds = 0
+		self.inner=self.doc[self.doc.find('<',len(self.tag)):self.doc.rfind('</')] # Содержимое
+		self.countchilds = 0 # Количество тэгов в содержимом с глубиной рекурсии на 1 больше
 		depth = 0
 		childs = []
 		for i in self.inner:
@@ -33,7 +42,6 @@ class node: # Рекурсивный парсер XML
 			elif i == '/' and depth > 0:
 				depth -= 1
 			childs[self.countchilds-1] += i
-
 		self.childnodes = []
 		self.childsbynames = {}
 		for i in childs:
@@ -42,7 +50,6 @@ class node: # Рекурсивный парсер XML
 				self.childsbynames[self.childnodes[-1].name].append(self.childnodes[-1])
 			else:
 				self.childsbynames[self.childnodes[-1].name] = [self.childnodes[-1]]
-
 	def print(self):
 		print('-'*self.depth+' '+self.tag,self.args)
 		for i in self.childnodes:
@@ -81,9 +88,8 @@ class node: # Рекурсивный парсер XML
 			json = json[:-2] +'\n'
 			json += '}'
 		return json
-
-
 with open('schedule.xml') as f:
 	ft = f.read()
 	a = node(ft,0)
 	print(a.createjson())
+print(time.clock() - start_time)
