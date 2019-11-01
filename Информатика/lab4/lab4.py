@@ -10,18 +10,28 @@ class node: # Рекурсивный парсер XML
 		self.childscount = 0 # Счетчик прямых наследников
 		self.childs = [] # Тэги прямых наследников
 		depth = 0
+		inn = ''
 		for splitted in tags: #Выявление родительского тэга и прямых наследников в doc 
 			if len(splitted) > 0:
 				splitted = '<' + splitted
 				newsplitted = ''
+				inntemp = splitted[splitted.find('>')+1:].replace('\t','').replace('\n','')
+				while True:
+					if len(inntemp)>0:
+						if inntemp[0] == ' ':
+							inntemp = inntemp[1:]
+						else:
+							break
+					else:
+						break
 				splitted = splitted[splitted.find('<'):splitted.find('>')+1]
 				name = splitted[1:splitted.find(' ')]
 				if name[-1]=='>':
 					name = 	name[:-1]
 				if splitted[-2] == '/':
-					self.inner+=splitted
+					self.inner+=splitted + inntemp
 					if depth > 1:
-						self.childs[self.childscount-1] += splitted
+						self.childs[self.childscount-1] += splitted + inntemp
 					elif depth == 1:
 						self.childs.append(splitted)
 						self.childscount+=1
@@ -31,18 +41,19 @@ class node: # Рекурсивный парсер XML
 				elif name[0]=='/':
 					depth -= 1
 					if depth!=0:
-						self.inner += splitted
-						self.childs[self.childscount-1] += splitted
+						self.inner += splitted + inntemp
+						self.childs[self.childscount-1] += splitted + inntemp
 				else:
 					if depth == 1: # Найден новый потомок
 						self.childs.append('')
 						self.childscount+=1
 					if depth == 0: # Найден родитель
+						inn = inntemp
 						self.tag = splitted
 						self.name = name
 					else:
-						self.inner+=splitted
-						self.childs[self.childscount-1] += splitted
+						self.inner+=splitted + inntemp
+						self.childs[self.childscount-1] += splitted + inntemp
 					depth += 1
 		sourceargs = self.tag[len(self.name)+2:-1] 
 		sourceargs = sourceargs.split(' ') # Список аргументов родительского тэга
@@ -63,7 +74,8 @@ class node: # Рекурсивный парсер XML
 			a = i.split('=')
 			if len(a)>1:
 				self.args[a[0]]=a[1].replace('"','')
-		print(self.tag)
+		if self.childscount == 0 and len(inn)>0:
+			self.args['__content__'] = inn
 		self.childnodes = [] # Экземпляры классов node вызваных для детей
 		self.childsbynames = {} 
 		for i in self.childs:
@@ -97,10 +109,9 @@ class node: # Рекурсивный парсер XML
 			else:
 				for j in self.childsbynames[i]:
 					json+=j.createjson()
-
 		for i in self.args.keys():
 			json += '	'*(self.depth+2)
-			json += '"_'+i+'" : "' + self.args[i] + '",'
+			json += '"@'+i+'" : "' + self.args[i] + '",'
 			json += '\n'
 		json = json[:-2]+'\n'
 		json += '	'*(self.depth+1)
@@ -112,5 +123,7 @@ class node: # Рекурсивный парсер XML
 		return json
 with open('schedule.xml') as f:
 	ft = f.read()
+	ft = '<par><a> <b a="lol"> kek</b> </a> <c> <b f="HATEMYLIFE"> </b> </c></par>'
 	a = node(ft,0)
+	print(a.createjson())
 print(time.clock() - start_time)
