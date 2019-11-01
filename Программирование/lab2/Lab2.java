@@ -16,8 +16,11 @@ public class Lab2{
 		b.addAlly(p4);
 		b.addFoe(p6);
 
-		B b1 = new B(2);
-		System.out.println(b1.a);
-
+		B b1 = new B();
+		A a1 = new A();
+		a1.hi();
+		b1.hi();
+		a1.hi("Mark");
+		b1.hi("Mark");
 	}
 }

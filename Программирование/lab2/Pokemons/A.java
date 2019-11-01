@@ -1,8 +1,10 @@
 public class A{
-	public int a;
-	public int b;
-	A(int b){
-		this.b = b;
-		this.a = 5;
+	public void hi(){
+		System.out.println("Hi");
+	}
+	public void hi(String name){
+		System.out.println("Hello, "+name);
+	}
+	A(){
 	}
 }

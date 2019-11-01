@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 abstract class Entity{
-	private ArrayList<Statement> statements = new ArrayList<Statement>();
-	protected String name;
+	private final ArrayList<Statement> statements = new ArrayList<Statement>();
+	protected final String name;
 	Entity(String name){
 		this.name = name;
 	}
@@ -10,12 +10,12 @@ abstract class Entity{
 	}
 	@Override
     public int hashCode() {
+        //return super.hashCode()+this.name.hashCode();
         return super.hashCode()+this.name.hashCode();
     }
-
     @Override
     public boolean equals(Object obj) {
-        return obj.hashCode()== this.hashCode() ? true : false;
+        return obj.hashCode() != this.hashCode() ? false : true;
     }
     @Override
     public String toString() {

@@ -35,6 +35,11 @@ public class Room extends APlace{
 			}
 		}
 	}
+	public void letLampsOff(){
+		ArrayList<Statement> add = new ArrayList<Statement>(
+			Arrays.asList(new Statement("выключился свет")));
+		this.addStatements(add);	
+	}
 	public void paymentThing(Human client,Things thing,int price){
 		for (int i = 0; i < thingsArr.size();i++){
 			if (thingsArr.get(i).getType()==Things.COINER){

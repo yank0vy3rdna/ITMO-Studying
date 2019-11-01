@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 public class Human extends Entity implements IHuman{
-	private ArrayList<Human> clientsArr = new ArrayList<Human>();
 	public void walk (APlace place){
 		System.out.println(place.getName());
 	}

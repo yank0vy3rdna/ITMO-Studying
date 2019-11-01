@@ -23,7 +23,8 @@ class Lab3 {
 		dunno.speak("Козлик, иди сюда, бачок потiк");
 		goat.action("видит неладное");
 		goat.action("подошел к крану");
-		room.action("отключение света");
+		room.letLampsOff();
 		room.letCoinerBlink();
+		room.hashCode();
 	}
 }
