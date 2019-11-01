@@ -13,19 +13,31 @@ class node: # Рекурсивный парсер XML
 		for splitted in tags: #Выявление родительского тэга и прямых наследников в doc 
 			if len(splitted) > 0:
 				splitted = '<' + splitted
-				name = splitted.split(' ')[0][1:]
+				newsplitted = ''
+				splitted = splitted[splitted.find('<'):splitted.find('>')+1]
+				name = splitted[1:splitted.find(' ')]
 				if name[-1]=='>':
 					name = 	name[:-1]
-				if name[0]=='/':
+				if splitted[-2] == '/':
+					self.inner+=splitted
+					if depth > 1:
+						self.childs[self.childscount-1] += splitted
+					elif depth == 1:
+						self.childs.append(splitted)
+						self.childscount+=1
+					elif depth == 0:
+						self.tag = splitted
+						self.name = name
+				elif name[0]=='/':
 					depth -= 1
 					if depth!=0:
-						self.inner+=splitted
+						self.inner += splitted
 						self.childs[self.childscount-1] += splitted
 				else:
-					if depth == 1:
+					if depth == 1: # Найден новый потомок
 						self.childs.append('')
 						self.childscount+=1
-					if depth == 0:
+					if depth == 0: # Найден родитель
 						self.tag = splitted
 						self.name = name
 					else:
@@ -51,6 +63,7 @@ class node: # Рекурсивный парсер XML
 			a = i.split('=')
 			if len(a)>1:
 				self.args[a[0]]=a[1].replace('"','')
+		print(self.tag)
 		self.childnodes = [] # Экземпляры классов node вызваных для детей
 		self.childsbynames = {} 
 		for i in self.childs:
@@ -99,7 +112,5 @@ class node: # Рекурсивный парсер XML
 		return json
 with open('schedule.xml') as f:
 	ft = f.read()
-	ft = "<par><a> <b> </b> </a> <c> <b> </b> </c></par>"
 	a = node(ft,0)
-	print(a.print())
 print(time.clock() - start_time)
