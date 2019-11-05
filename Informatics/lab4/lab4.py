@@ -5,6 +5,8 @@ class node: # Рекурсивный парсер XML
 	def __init__(self,doc,depth): # Аргумент doc содержит DOM-код, включающий в себя единственный родительский тэг и его тело(где возможны другие тэги)
 		self.doc = doc # Тело 
 		self.depth = depth # Глубина рекурсии
+		self.parse()
+	def parse(self):
 		tags = self.doc.split('<') # Получим список строк разделенных по символу открытия тэга
 		self.inner = ''#Тело родительского тэга
 		self.childscount = 0 # Счетчик прямых наследников

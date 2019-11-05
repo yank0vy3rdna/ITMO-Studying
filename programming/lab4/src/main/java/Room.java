@@ -1,0 +1,59 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+public class Room extends APlace{
+	Room(String name) {
+		super(name);
+	}
+
+	private ArrayList<Thing> thingsArr = new ArrayList<Thing>();
+	public void addThing(Thing thing){
+		thingsArr.add(thing);
+		System.out.println("Теперь в \""+this.getName()+"\" есть объект \""+thing.getName()+"\"");
+	}
+	public void useThing(Human client,Things thing){
+		for (int i = 0; i < thingsArr.size();i++){
+			if (thingsArr.get(i).getType() == thing){
+				if(thingsArr.get(i).checkClient(client)){
+					System.out.println(client.getName() + " использует объект \"" + thingsArr.get(i).getName()+"\"");
+					client.useThing(thingsArr.get(i));
+					thingsArr.get(i).rmClient(client);
+					break;
+				}
+				else
+				{
+					System.out.println(client.getName() + " пытается использовать объект \"" + thingsArr.get(i).getName()+"\", но ему дают по счам тк тот не заплатил нолог");
+				}
+			}
+		}
+	}
+	public void letCoinerBlink(){
+		for (int i = 0; i < thingsArr.size();i++){
+			if(thingsArr.get(i).getType()==Things.COINER){
+				ArrayList<Statement> add = new ArrayList<Statement>(
+					Arrays.asList(new Statement("мигание глазка"),new Statement("поблескивание металлического язычка приемника монет на стене")));
+				thingsArr.get(i).addStatements(add);
+			}
+		}
+	}
+	public void letLampsOff(){
+		ArrayList<Statement> add = new ArrayList<Statement>(
+			Arrays.asList(new Statement("выключился свет")));
+		this.addStatements(add);	
+	}
+	public void paymentThing(Human client,Things thing,int price){
+		for (int i = 0; i < thingsArr.size();i++){
+			if (thingsArr.get(i).getType()==Things.COINER){
+				thingsArr.get(i).addClient(client);
+			}
+		}
+		for (int i = 0; i < thingsArr.size();i++){
+			if (thingsArr.get(i).getType()==thing){
+
+				this.useThing(client,Things.COINER);
+				System.out.println(client.getName() + " платит нолог на объект \"" + thingsArr.get(i).getName()+"\" в размере "+String.valueOf(price)+" сантиков");
+				thingsArr.get(i).addClient(client);
+				break;
+			}
+		}
+	}
+}
