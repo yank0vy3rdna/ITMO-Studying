@@ -1,21 +1,21 @@
 import java.util.ArrayList;
 public class Human extends Entity implements IHuman{
 	public void walk (APlace place){
-		System.out.println(place.getName());
+		Logger.log(place.getName());
 	}
 	public void decision(String des){
-		System.out.println(this.getName() + " твердо решает " + des);
+		Logger.log(this.getName() + " твердо решает " + des);
 	}
 	public void action(String act){
-		System.out.println(this.getName() + " " + act);
+		Logger.log(this.getName() + " " + act);
 	}
 	public void speak(String str){
-		System.out.println(this.getName() + " говорит: " + str);
+		Logger.log(this.getName() + " говорит: " + str);
 	}
-	public void useThing(Thing thing){
-		ArrayList<Statement> rm = thing.getonSuccessfullUsingRm();
+	public void useThing(Thing thing) throws NamingException{
+		ArrayList<String> rm = thing.getonSuccessfullUsingRm();
 		this.removeStatements(rm);
-		ArrayList<Statement> add = thing.getonSuccessfullUsingAdd();
+		ArrayList<String> add = thing.getonSuccessfullUsingAdd();
 		this.addStatements(add);
 	}
 
@@ -23,7 +23,7 @@ public class Human extends Entity implements IHuman{
     public String toString() {
     	return "существо по имени " + this.getName();
     }
-	Human(String name){
+	Human(String name) throws NamingException{
 		super(name);
 	}
 }

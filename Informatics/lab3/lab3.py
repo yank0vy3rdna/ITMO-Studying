@@ -1,6 +1,6 @@
 f = open('lab3input.txt') # Открываю файл для чтения
 
-sootv = {0: '0', 1 : '1', 2 : '2', 3 : '3', 4 : '4', 5 : '5', 6 : '6', 7 : '7', 8 : '8', 9 : '9', 10 : 'A', 11 : 'B', 12 : 'C', 13 : 'D', 14 : 'E', 15 : 'F'}
+DECtoHEX = {0: '0', 1 : '1', 2 : '2', 3 : '3', 4 : '4', 5 : '5', 6 : '6', 7 : '7', 8 : '8', 9 : '9', 10 : 'A', 11 : 'B', 12 : 'C', 13 : 'D', 14 : 'E', 15 : 'F'}
 
 def fact(n): # Функция для факториала
     answ = 1
@@ -8,17 +8,17 @@ def fact(n): # Функция для факториала
         answ *= i + 1
     return answ
 
-def convF(i): # Перевод из факториальной системы счисления(тип данных str) в десятичную(int)
+def convFtoDEC(i): # Перевод из факториальной системы счисления(тип данных str) в десятичную(int)
     answ = 0
     for j in range(len(i)):
         answ += int(i[j])*fact(len(i) - j)
     return answ
 
-def conv10to16(i):
+def convDECtoHEX(i):
     i = int(i)
     answ = ''
     while i > 0:
-        answ += sootv[i % 16]
+        answ += DECtoHEX[i % 16]
         i = i // 16
     return answ[::-1]
 
@@ -32,12 +32,12 @@ for line in f.readlines(): # Построчное чтение из файла
     if osn1 == 'Ф': # Выполняю все переводы
         for i in data:
             if id(data[-1]) == id(i):
-                print( i, ' -> ', convF(i))
+                print( i, ' -> ', convFtoDEC(i))
             else:
-                print( i, ' -> ', convF(i),end = ' | ')
+                print( i, ' -> ', convFtoDEC(i),end = ' | ')
     if osn1 == '10':
         for i in data:
             if id(data[-1]) == id(i):
-                print( i, ' -> ', conv10to16(i))
+                print( i, ' -> ', convDECtoHEX(i))
             else:
-                print( i, ' -> ', conv10to16(i),end = ' | ')
+                print( i, ' -> ', convDECtoHEX(i),end = ' | ')
