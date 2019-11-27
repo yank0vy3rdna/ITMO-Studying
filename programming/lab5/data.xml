@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<java version="11.0.4" class="java.beans.XMLDecoder">
+ <object class="java.util.HashMap">
+  <void method="put">
+   <int>1</int>
+   <object class="Human">
+    <void property="name">
+     <string>my billy harrington</string>
+    </void>
+   </object>
+  </void>
+ </object>
+ <object class="java.util.Date">
+  <long>1574709291872</long>
+ </object>
+ <object class="java.util.Date">
+  <long>1574851617422</long>
+ </object>
+</java>
