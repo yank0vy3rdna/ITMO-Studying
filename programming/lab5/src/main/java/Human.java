@@ -20,7 +20,7 @@ public class Human extends Entity implements IHuman, Comparable<Human>{
 	public String getName(){
 		return name;
 	}
-    public Human() throws NamingException{
+    public Human(){
 		super("unnamed");
 	}
 	public Human(String name) {
