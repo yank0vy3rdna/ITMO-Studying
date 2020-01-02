@@ -10,7 +10,7 @@ class Domain {
 		this.storage = storage;
 	}
 	public String printHelp(){
-		return "insert %key% %jsoncode%\nremove %key%\nremove greater %jsoncode%\nremove greater key %key%\nshow\ninfo\nhelp\nimport %filename%\nexit";
+		return "insert %key% %jsoncode%\nremove %key%\nremove greater %jsoncode%\nremove greater key %key%\nshow\ninfo\nhelp\nimport %filename%\nexit\n";
 	}
 	public void removeParser(String inp){
 		String[] operands = inp.split(" ",2);
@@ -34,19 +34,15 @@ class Domain {
 		}catch(java.io.IOException ex){ex.printStackTrace();}
 	}
 	private void removeGreaterKey(Integer key){
-		HashMap<Integer, Human> newHumans = new HashMap<>();
-		Object[] keySet = storage.getKeySet().toArray();
-		for (int i = 0; i < keySet.length; i++){
-			if((int)keySet[i]>key){
-				storage.remove((int)i);
-			}
-		}
+		storage.removeGreaterKey(key);
 	}
-	public void show(){
+	public String show(){
 		Object[] keySet = storage.getKeySet().toArray();
+		String output = "";
 		for (Object i : keySet){
-			System.out.println(i + " " +storage.getHumanById((int)i));
+			output += i + " " +storage.getHumanById((int)i)+"\n";
 		}
+		return output;
 	}
 	public void insertJSON(Integer key, String json){
 		storage.insert(key,(Human)JSONWorker.readValue(json,Human.class));
@@ -55,7 +51,7 @@ class Domain {
 		return "Collection type: " + storage.getCollectionType()+"\n"+
 		"Creation date: " + storage.getCreateDate() +"\n"+
 		"Modification date: " + storage.getModifyDate()+"\n"+
-		"Count elements: " + storage.getSize();
+		"Count elements: " + storage.getSize()+"\n";
 	}
 
 	public void initWithXML(String filename) {

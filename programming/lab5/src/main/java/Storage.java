@@ -57,4 +57,10 @@ public class Storage {
         modifyDate = new Date();
         humans.putAll((HashMap<Integer, Human>) XMLWorker.objectXmlDecode(fileName).get(0));
     }
+
+    public void removeGreaterKey(Integer key) {
+        humans = humans.entrySet().stream()
+                .filter(e -> e.getKey()<=key)
+                .collect(Collectors.toMap(e->e.getKey(),e->e.getValue()));
+    }
 }

@@ -1,0 +1,7 @@
+put a b
+put b c
+put c d
+get c
+delete р
+get b
+get a

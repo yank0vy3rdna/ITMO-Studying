@@ -9,7 +9,7 @@ class Controller {
 	public void end(String filename){
 		manager.saveXML(filename);
 	}
-	public void execute(String command){
+	public String execute(String command){
 		String[] operands = command.split(" ",2);
 		switch(operands[0]){
 			case "insert":
@@ -17,20 +17,18 @@ class Controller {
 				manager.insertJSON(Integer.parseInt(params[0]),params[1]);
 				break;
 			case "info":
-				manager.printInfo();
-				break;
+				return manager.printInfo();
 			case "import":
 				manager.importXML(operands[1]);
 				break;
 			case "show":
-				manager.show();
-				break;
+				return manager.show();
 			case "help":
-				manager.printHelp();
-				break;
+				return manager.printHelp();
 			case "remove":
 				manager.removeParser(command);
 				break;
 		}
+		return "";
 	}
 }

@@ -19,7 +19,7 @@ class UI {
         	if (line.equals("quit") || line.equals("exit")){
         		break;
         	}else{
-        		cmd.execute(line);
+        		System.out.print(cmd.execute(line));
         	}
 		}
 	}
