@@ -21,6 +21,13 @@ http://maven.apache.org/xsd/maven-4.0.0.xsd">
 <build>
   <plugins>
     <plugin>
+      <groupId>org.apache.maven.plugins</groupId>
+      <artifactId>maven-javadoc-plugin</artifactId>
+      <configuration>
+        <show>private</show>  <!--javadoc shows all classes and members-->
+      </configuration>
+    </plugin>
+    <plugin>
     <groupId>org.codehaus.mojo</groupId>
     <artifactId>exec-maven-plugin</artifactId>
     <version>1.2.1</version>
