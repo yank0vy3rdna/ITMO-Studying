@@ -1,0 +1,1 @@
+What the heck do we mean by modal? When you’re using most word processors and text editors, the alphanumeric keys (i.e., a through z, 1 through 9) are only used to input those characters unless they’re modified by a control key. In Vim, the mode that the editor is in determines whether the alphanumeric keys will input those characters or move the cursor through the document.
